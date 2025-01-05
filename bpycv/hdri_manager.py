@@ -15,6 +15,7 @@ import glob
 from bs4 import BeautifulSoup
 import requests
 import urllib.parse as urlparse
+import json
 
 bs = BeautifulSoup
 rq = requests
@@ -190,14 +191,10 @@ class HdriManager:
                         rq.get(url, timeout=5).text,
                         features="html.parser",
                     )
-                    href = [
-                        a["href"]
-                        for a in html.find_all("a")
-                        if f"_{resolution}." in a.get("href", "")
-                    ][0]
+                    script_tag = json.loads(html.find('script', {'id': '__NEXT_DATA__'}).text)
+                    href = script_tag["props"]["pageProps"]["files"]["hdri"][resolution]["exr"]["url"]
                     cats = ["category", category]
-                    tags = ["tags", "null"]
-                    name = f"{prefix}.{'='.join(cats)}.{'='.join(tags)}.exr"
+                    name = f"{prefix}.{'='.join(cats)}.exr"
 
                     path = pathjoin(hdri_dir, name)
                     r = rq.get(href, timeout=5)
