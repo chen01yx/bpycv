@@ -194,7 +194,8 @@ class HdriManager:
                     script_tag = json.loads(html.find('script', {'id': '__NEXT_DATA__'}).text)
                     href = script_tag["props"]["pageProps"]["files"]["hdri"][resolution]["exr"]["url"]
                     cats = ["category", category]
-                    name = f"{prefix}.{'='.join(cats)}.exr"
+                    tags = ["tags"] + script_tag["props"]["pageProps"]["data"]["tags"]
+                    name = f"{prefix}.{'='.join(cats)}.{'='.join(tags)}.exr"
 
                     path = pathjoin(hdri_dir, name)
                     r = rq.get(href, timeout=5)
