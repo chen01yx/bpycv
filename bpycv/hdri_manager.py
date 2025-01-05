@@ -138,12 +138,18 @@ class HdriManager:
         resolution = self.resolution
         category = self.category
         hdri_dir = self.hdri_dir
+        '''
         url = f"https://hdrihaven.com/hdris/category/?c={category}"
         page = rq.get(url, timeout=5)
         html = BeautifulSoup(page.text, features="html.parser")
         hrefs = [a["href"] for a in html.find(id="item-grid").find_all("a")]
 
         names = [url2dict(href)["h"][0] for href in hrefs]
+        '''
+        url = f"https://api.polyhaven.com/assets?t=hdris&c={category}"
+        page = rq.get(url, timeout=5)
+        data = page.json()
+        names = list(data.keys())
 
         #  'https://hdrihaven.com/files/hdris/tv_studio_4k.hdr'
         def download(name):
@@ -156,6 +162,7 @@ class HdriManager:
                     paths = boxx.glob(os.path.join(hdri_dir, prefix + "*"))
                     if len(paths):
                         return paths[0]
+                    '''
                     url = f"https://hdrihaven.com/hdri/?h={name}"
                     html = BeautifulSoup(
                         rq.get(url, timeout=5).text,
@@ -177,6 +184,20 @@ class HdriManager:
                         for a in html.find(text="Tags:").parent.parent.find_all("a")
                     ]
                     name = f"{prefix}.{'='.join(cats)}.{'='.join(tags)}.{href[-3:]}"
+                    '''
+                    url = f"https://polyhaven.com/a/{name}"
+                    html = BeautifulSoup(
+                        rq.get(url, timeout=5).text,
+                        features="html.parser",
+                    )
+                    href = [
+                        a["href"]
+                        for a in html.find_all("a")
+                        if f"_{resolution}." in a.get("href", "")
+                    ][0]
+                    cats = ["category", category]
+                    tags = ["tags", "null"]
+                    name = f"{prefix}.{'='.join(cats)}.{'='.join(tags)}.exr"
 
                     path = pathjoin(hdri_dir, name)
                     r = rq.get(href, timeout=5)
