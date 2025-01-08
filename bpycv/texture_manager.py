@@ -190,7 +190,7 @@ class TextureManager:
         self.downloading = False
         print("Download texture threads has finished!")
     
-    @classmethod
+    @staticmethod
     def load_texture(path):
         mat_name = os.path.basename(path).split(".")[0]
         with bpy.data.libraries.load(path) as (data_from, data_to):
@@ -208,9 +208,6 @@ class TextureManager:
             print(tex)
             assert tm.category in tex
         boxx.g()
-    
-    def load_texture(self, texture_name):
-        pass
 
 
 if __name__ == "__main__":
