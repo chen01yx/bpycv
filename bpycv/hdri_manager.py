@@ -100,7 +100,7 @@ class HdriManager:
                 )
             )
         self.df = boxx.pd.DataFrame(listt)
-        hdr_paths = self.df[self.df.cats.apply(lambda cats: self.category in cats)].path
+        hdr_paths = self.df[self.df.cats.apply(lambda cats: set(self.category.split(",")).issubset(set(cats)))].path
         self.hdr_paths = sorted(hdr_paths)
 
     def __len__(self):

@@ -89,7 +89,7 @@ class TextureManager:
                 )
             )
         self.df = boxx.pd.DataFrame(listt)
-        tex_paths = self.df[self.df.cats.apply(lambda cats: self.category in cats)].path
+        tex_paths = self.df[self.df.cats.apply(lambda cats: set(self.category.split(",")).issubset(set(cats)))].path
         self.tex_paths = sorted(tex_paths)
 
     def __len__(self):
