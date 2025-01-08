@@ -12,6 +12,7 @@ from boxx import listdir, pathjoin
 
 import bpy
 import random
+import math
 
 from .utils import encode_inst_id
 from .statu_recover import StatuRecover
@@ -98,14 +99,14 @@ def load_hdri_world(hdri_path, random_rotate_z=False):
         bg_node.Color = env_node.Color
         output_node.Surface = bg_node.Background
         if random_rotate_z:
-            rotate_deg = random.random() * 720
+            rotate_rad = random.random() * math.pi * 2
             coord = Node("ShaderNodeTexCoord")
             mapping = Node("ShaderNodeMapping", vector_type="TEXTURE")
             mapping.Vector = coord.Object
             coord.location = -900, 0
             mapping.location = -600, 0
             env_node.Vector = mapping.Vector
-            mapping.node.inputs["Rotation"].default_value.z = rotate_deg
+            mapping.node.inputs["Rotation"].default_value.z = rotate_rad
     return env_node
 
 
