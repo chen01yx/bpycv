@@ -134,7 +134,7 @@ class TextureManager:
                     if self.debug:
                         print(name)
                     prefix = f"{name}_{resolution}"
-                    paths = boxx.glob(os.path.join(tex_dir, prefix + "*.blend"))
+                    paths = boxx.glob(os.path.join(tex_dir, prefix + "*/*.blend"))
                     if len(paths):
                         return paths[0]
 

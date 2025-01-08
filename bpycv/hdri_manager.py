@@ -27,7 +27,7 @@ def url2dict(url):
 
 
 class HdriManager:
-    exts = ["hdr", "exr"]
+    exts = ["exr"]
 
     def __init__(
         self,
@@ -61,7 +61,7 @@ class HdriManager:
         self.downloading = download
         self.debug = debug
         if self.downloading:
-            print('Starting download ".hdr" file from "polyhaven.com" in side threads')
+            print('Starting download ".exr" file from "polyhaven.com" in side threads')
             if debug:
                 self.prepare()
             else:
@@ -121,8 +121,8 @@ class HdriManager:
                 self.downloading
             ), f'No hdri file in "{self.hdri_dir}", make sure HdriManager(download=True)'
             self.set_hdr_paths()
-            if timegap(5, 'waiting for download ".hdr" file'):
-                print('Waiting for download first ".hdr" file....')
+            if timegap(5, 'waiting for download ".exr" file'):
+                print('Waiting for download first ".exr" file....')
             sleep(0.1)
         return random.choice(self.hdr_paths)
 
