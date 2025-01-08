@@ -27,12 +27,12 @@ class TextureManager:
         debug=False,
     ):
         """
-        Download and manage hdri file from https://polyhaven.com/textures/
+        Download and manage blender texture file from https://polyhaven.com/textures/
 
         Parameters
         ----------
         tex_dir : str, optional
-            hdri dir. The default is "./bpycv_tex_cache".
+            texture dir. The default is "./bpycv_tex_cache".
         resolution : str, optional
             choice [1k, 2k, 4k, 8k, 16k, 19k]. The default is "4k".
         category : str, optional
