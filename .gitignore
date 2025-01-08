@@ -3,6 +3,8 @@ example/*png
 example/*jpg
 *.exr
 *.mat
+bpycv_hdri_cache/*
+bpycv_tex_cache/*
 
 tmp_*
 # Python:

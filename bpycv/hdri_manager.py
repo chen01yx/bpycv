@@ -38,7 +38,7 @@ class HdriManager:
         debug=False,
     ):
         """
-        Download and manage hdri file from https://hdrihaven.com/hdris/
+        Download and manage hdri file from https://polyhaven.com/hdris
 
         Parameters
         ----------
@@ -47,17 +47,10 @@ class HdriManager:
         resolution : str, optional
             choice [1k, 2k, 4k, 8k, 16k, 19k]. The default is "4k".
         category : str, optional
-            refer to https://hdrihaven.com/hdris/ side bar
-            choice one [All, Outdoor, Architecture, Building, Europe,
-                        Field, Forest, Grass, Hill, Park, Path, River,
-                        Road, Rock, Sun1, Tree, View, Skies, Indoor,
-                        Studio, Nature, Urban, Night, Sunrise/Sunset,
-                        Morning/Afternoon, Midday, Clear, Partly Cloudy,
-                        Overcast, High Contrast, Medium Contrast,
-                        Low Contrast, Natural Light, Artificial Light].
+            refer to https://polyhaven.com/hdris/ side bar. Use comma to separate multiple categories.
             The default is "all".
         download : bool, optional
-            If True, auto download from https://hdrihaven.com/hdris/
+            If True, auto download from https://polyhaven.com/hdris/
             by another threading using requesets.
             The default is False.
         """
@@ -68,7 +61,7 @@ class HdriManager:
         self.downloading = download
         self.debug = debug
         if self.downloading:
-            print('Starting download ".hdr" file from "hdrihaven.com" in side threads')
+            print('Starting download ".hdr" file from "polyhaven.com" in side threads')
             if debug:
                 self.prepare()
             else:
@@ -193,7 +186,7 @@ class HdriManager:
                     )
                     script_tag = json.loads(html.find('script', {'id': '__NEXT_DATA__'}).text)
                     href = script_tag["props"]["pageProps"]["files"]["hdri"][resolution]["exr"]["url"]
-                    cats = ["category", category]
+                    cats = ["category"] + script_tag["props"]["pageProps"]["data"]["categories"]
                     tags = ["tags"] + script_tag["props"]["pageProps"]["data"]["tags"]
                     name = f"{prefix}.{'='.join(cats)}.{'='.join(tags)}.exr"
 
