@@ -61,14 +61,23 @@ class set_annotation_render(StatuRecover):
         # self.set_attr(scene.render, "tile_x", 256)
         # self.set_attr(scene.render, "tile_y", 256)
 
-        attrs = dict(
-            file_format="OPEN_EXR",
-            compression=0,
-            color_mode="RGBA",
-            color_depth="32",
-            exr_codec="NONE",
-            use_zbuffer=True,
-        )
+        if bpy.app.version < (4, 0, 0):
+            attrs = dict(
+                file_format="OPEN_EXR",
+                compression=0,
+                color_mode="RGBA",
+                color_depth="32",
+                exr_codec="NONE",
+                use_zbuffer=True,
+            )
+        else:
+            attrs = dict(
+                file_format="OPEN_EXR_MULTILAYER",
+                compression=0,
+                color_mode="RGBA",
+                color_depth="32",
+                exr_codec="NONE",
+            )
         self.set_attrs(render.image_settings, attrs)
         self.set_attrs(bpy.context.view_layer, dict(use_pass_z=True))
 

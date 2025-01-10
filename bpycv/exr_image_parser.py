@@ -93,6 +93,11 @@ class ExrReader(minexr.reader.MinExrReader):
 
 class ExrImage:
     LIMIT_DEPTH = 6e4
+    R = "R" if bpy.app.version < (4, 0, 0) else "ViewLayer.Combined.R"
+    G = "G" if bpy.app.version < (4, 0, 0) else "ViewLayer.Combined.G"
+    B = "B" if bpy.app.version < (4, 0, 0) else "ViewLayer.Combined.B"
+    A = "A" if bpy.app.version < (4, 0, 0) else "ViewLayer.Combined.A"
+    Z = "Z" if bpy.app.version < (4, 0, 0) else "ViewLayer.Depth.Z"
 
     def __init__(self, exr_path, K=None):
         with open(exr_path, "rb") as fp:
@@ -105,13 +110,13 @@ class ExrImage:
         self.K = K
 
     def get_rgb(self):
-        return self.reader.select(["R", "G", "B"]).copy()
+        return self.reader.select([self.R, self.G, self.B]).copy()
 
     def get_rgba(self):
-        return self.reader.select(["R", "G", "B", "A"]).copy()
+        return self.reader.select([self.R, self.G, self.B, self.A]).copy()
 
     def get_raw_depth(self):
-        raw_depth = self.reader.select(["Z"]).copy().squeeze()
+        raw_depth = self.reader.select([self.Z]).copy().squeeze()
         if self.by_cycles:
             raw_depth = depth_of_point_to_depth(raw_depth, self.K)
         return raw_depth
