@@ -152,8 +152,9 @@ class ImageWithAnnotation(dict):
         super().__init__(**kv)
         if image is not None:
             self["image"] = image
-        self["inst"] = exr.get_inst()
-        self["depth"] = exr.get_depth()
+        if exr is not None:
+            self["inst"] = exr.get_inst()
+            self["depth"] = exr.get_depth()
         self["_raw_exr"] = exr
 
     def __getattribute__(self, key):
