@@ -193,10 +193,15 @@ class TextureManager:
     
     @staticmethod
     def load_texture(path):
-        mat_name = os.path.basename(path).split(".")[0]
+        # mat_name = os.path.basename(path).split(".")[0]
+        mat_names = set(bpy.data.materials.keys())
         with bpy.data.libraries.load(path) as (data_from, data_to):
             data_to.materials = data_from.materials
-        return bpy.data.materials[mat_name]
+        mat_names_new = list(bpy.data.materials.keys())
+        for mat_name in mat_names_new:
+            if mat_name not in mat_names:
+                return bpy.data.materials[mat_name]
+        raise RuntimeError(f"in load_texture '{path}', no new material found")
 
     @classmethod
     def test(cls):
