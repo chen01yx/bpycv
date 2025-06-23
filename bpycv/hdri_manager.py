@@ -95,7 +95,7 @@ class HdriManager:
                     name=name,
                     res=name.split("_")[-1],
                     cats=fname.split(".")[1].split("="),
-                    tags=fname.split(".")[2].split("="),
+                    # tags=fname.split(".")[2].split("="),
                     path=path,
                 )
             )
@@ -188,7 +188,8 @@ class HdriManager:
                     href = script_tag["props"]["pageProps"]["files"]["hdri"][resolution]["exr"]["url"]
                     cats = ["category"] + script_tag["props"]["pageProps"]["data"]["categories"]
                     tags = ["tags"] + script_tag["props"]["pageProps"]["data"]["tags"]
-                    name = f"{prefix}.{'='.join(cats)}.{'='.join(tags)}.exr"
+                    # name = f"{prefix}.{'='.join(cats)}.{'='.join(tags)}.exr"
+                    name = f"{prefix}.{'='.join(cats)}.exr"
 
                     path = pathjoin(hdri_dir, name)
                     r = rq.get(href, timeout=5)

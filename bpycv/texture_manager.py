@@ -84,7 +84,7 @@ class TextureManager:
                     name=name,
                     res=name.split("_")[-1],
                     cats=dirname.split(".")[1].split("="),
-                    tags=dirname.split(".")[2].split("="),
+                    # tags=dirname.split(".")[2].split("="),
                     path=path,
                 )
             )
@@ -146,7 +146,8 @@ class TextureManager:
                     script_tag = json.loads(html.find('script', {'id': '__NEXT_DATA__'}).text)
                     cats = ["category"] + script_tag["props"]["pageProps"]["data"]["categories"]
                     tags = ["tags"] + script_tag["props"]["pageProps"]["data"]["tags"]
-                    subdir = pathjoin(tex_dir, f"{prefix}.{'='.join(cats)}.{'='.join(tags)}")                    
+                    # subdir = pathjoin(tex_dir, f"{prefix}.{'='.join(cats)}.{'='.join(tags)}")
+                    subdir = pathjoin(tex_dir, f"{prefix}.{'='.join(cats)}")
 
                     for include_tex_path, include_tex_data in script_tag["props"]["pageProps"]["files"]["blend"][resolution]["blend"]["include"].items():
                         href = include_tex_data["url"]
